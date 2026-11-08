@@ -2,6 +2,13 @@
 
 Append meaningful changes here. Keep newest entries at the top.
 
+## 2026-11-08: First Scheduled Retention Run Confirmed (R9.2 Done)
+
+- A read-only query on production `data_retention_runs` shows the first `schedule` run at 2026-11-07 21:42:35 UTC (03:42 Dhaka). That is inside the Hobby-plan hour for the `0 21 * * *` cron.
+- Every rule changed 0 rows (interest contacted/expired, inactive WhatsApp, checkout copies, orders anonymized/deleted), which matches the data in production today.
+- Plan: R9.2 ✅. Daily automatic deletion now runs without any manual step.
+- No code or database change in this entry.
+
 ## 2026-11-07: CRON_SECRET Set and Daily Retention Schedule Enabled (R9.2)
 
 - The owner added `CRON_SECRET` in Vercel → project Settings → Environment Variables (Production only, sensitive). Its value was never shared in chat or with Claude.
