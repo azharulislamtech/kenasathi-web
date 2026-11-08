@@ -19,14 +19,17 @@ test("every learning goal tag and tile title is written in the Kids guideline", 
 
 test("a product fits an age button when its range overlaps that year", () => {
   const threeToSix = product({ ageMinMonths: 36, ageMaxMonths: 72 });
-  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(threeToSix, b.key)), [true, true, true]);
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(threeToSix, b.key)), [false, true, true, true]);
   const fourToFive = product({ ageMinMonths: 48, ageMaxMonths: 60 });
-  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(fourToFive, b.key)), [false, true, false]);
-  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(product({ ageMinMonths: 36, ageMaxMonths: 48 }), b.key)), [true, false, false]);
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(fourToFive, b.key)), [false, false, true, false]);
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(product({ ageMinMonths: 36, ageMaxMonths: 48 }), b.key)), [false, true, false, false]);
+  // 2–3 years (owner decision 2026-11-08): a 2+ toy fits every year; a 24–36 month toy only the first.
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(product({ ageMinMonths: 24, ageMaxMonths: 72 }), b.key)), [true, true, true, true]);
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(product({ ageMinMonths: 24, ageMaxMonths: 36 }), b.key)), [true, false, false, false]);
   const fromFive = product({ ageMinMonths: 60 });
-  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(fromFive, b.key)), [false, false, true]);
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(fromFive, b.key)), [false, false, false, true]);
   // No age set: not placed in any age button.
-  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(product({}), b.key)), [false, false, false]);
+  assert.deepEqual(AGE_BUCKETS.map((b) => fitsAge(product({}), b.key)), [false, false, false, false]);
   assert.equal(fitsAge(product({}), "unknown"), true);
 });
 

@@ -12,8 +12,10 @@ export const LEARNING_GOALS: LearningGoal[] = [
   { tag: "drawing-colors", title: "আঁকা ও রং", question: "আঁকতে আর রং চিনতে শিখবে?" }
 ];
 
-// Launch range is 3–6 years (wireframe), in one-year buttons. Months match V11's age columns.
+// Launch range is 2–6 years (owner decision 2026-11-08; was 3–6), in one-year buttons.
+// Months match V11's age columns.
 export const AGE_BUCKETS = [
+  { key: "2-3", label: "২–৩ বছর", min: 24, max: 36 },
   { key: "3-4", label: "৩–৪ বছর", min: 36, max: 48 },
   { key: "4-5", label: "৪–৫ বছর", min: 48, max: 60 },
   { key: "5-6", label: "৫–৬ বছর", min: 60, max: 72 }

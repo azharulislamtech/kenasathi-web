@@ -18,7 +18,7 @@ export async function generateMetadata({ searchParams }: KidsPageProps): Promise
   const kids = (await getStoreProducts({ section: "kids" })).filter((product) => product.state === "in_stock");
   return {
     title: "Kids & Baby — খেলতে খেলতে শেখা",
-    description: "৩–৬ বছরের শিশুর শেখার খেলনা ও উপকরণ। ক্যাশ অন ডেলিভারি, পণ্য দেখে টাকা দিন।",
+    description: "২–৬ বছরের শিশুর শেখার খেলনা ও উপকরণ। ক্যাশ অন ডেলিভারি, পণ্য দেখে টাকা দিন।",
     alternates: { canonical: "/kids" },
     // A filtered view, or an empty section, is not a page to index.
     ...(filtered || kids.length === 0 ? { robots: { index: false, follow: true } } : {})
@@ -57,7 +57,7 @@ export default async function KidsPage({ searchParams }: KidsPageProps) {
           <p className="text-sm font-semibold text-sky-700">Kids & Baby</p>
           <h1 className="mt-2 text-2xl font-bold text-slate-950 sm:text-3xl">খেলতে খেলতে শেখা, নিরাপদে বেড়ে ওঠা</h1>
           {inStock.length ? (
-            <p className="mt-2 text-base text-slate-700">৩–৬ বছরের শিশুর শেখার খেলনা ও উপকরণ।</p>
+            <p className="mt-2 text-base text-slate-700">২–৬ বছরের শিশুর শেখার খেলনা ও উপকরণ।</p>
           ) : (
             <p className="mt-2 max-w-2xl text-base leading-7 text-slate-700" data-testid="kids-empty-note">
               এই মুহূর্তে এই ভাগে বিক্রির জন্য কোনো পণ্য নেই। পণ্য নিজের হাতে আসার পর তবেই এখানে দেখানো হবে।

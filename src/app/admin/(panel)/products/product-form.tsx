@@ -318,7 +318,7 @@ export function ProductForm({ categories, error, mode, notice, product }: Produc
                     type="number"
                   />
                 </label>
-                <p id="age_max_months-help" className="mt-2 text-xs leading-5 text-slate-500">For Kids products, such as 36 to 72 for 3–6 years. Leave both empty otherwise.</p>
+                <p id="age_max_months-help" className="mt-2 text-xs leading-5 text-slate-500">For Kids products, such as 36 to 72 for 3–6 years, or 24 for 2 years and up (only if no part is a choking risk). Leave both empty otherwise.</p>
                 <FieldError message={state.fieldErrors.age_max_months} />
               </div>
               <div className="block">
