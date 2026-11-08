@@ -2,6 +2,21 @@
 
 Append meaningful changes here. Keep newest entries at the top.
 
+## 2026-11-08: Kids Ages 2–6 Deployment
+
+- #57 widens the Kids range from 3–6 to 2–6 years, on the owner's decision.
+  - A first age button "২–৩ বছর" (24–36 months). It appears only when an in-stock product fits that age.
+  - The Kids page, meta description and kids-baby category intro say "২–৬ বছরের".
+  - The admin age help text mentions the choking-risk condition.
+  - Kids guideline v1.5: selling for 2–3 years requires the toilet-roll small-parts test; if any part fails, the minimum age is 3+.
+- Verification: independently re-run in one full pass on a clean checkout of 065661d (unit 61/61, db 58/58, e2e 57/57, build, audit). The owner confirmed the merge and deploy in this session. #57 merged as `c407913` after green CI.
+- Deployed `c407913` with `--skip-domain` as `dpl_EV3gqVyPtnXzyfDCExofHVazukuw` (https://ecommerce-mvp-prototype-i0arb15c7-azadbasis-4964s-projects.vercel.app). verify-live-release (empty mode) passed 11 checks on the staged URL and again on https://kenasathi.com after promotion. The same regression list was checked on staging and on live:
+  - `/kids` returns 200 with "২–৬ বছরের" and no "২–৩ বছর" button, because no product exists yet.
+  - `/`, `/products` and `/checkout` return 200.
+  - `/categories/home-living` returns 301 to `/products?section=home`, and electronics, fashion, beauty and accessories return 301 to `/`.
+  - Signed out, `/admin/categories`, `/admin/interest` and `/admin/whatsapp` return 307 to `/admin/login?reason=auth-required`.
+- Rollback target: `dpl_8xJqPjervpze99ieW6tg6m8fA4SU`. No database change.
+
 ## 2026-11-08: First Scheduled Retention Run Confirmed (R9.2 Done)
 
 - A read-only query on production `data_retention_runs` shows the first `schedule` run at 2026-11-07 21:42:35 UTC (03:42 Dhaka). That is inside the Hobby-plan hour for the `0 21 * * *` cron.
