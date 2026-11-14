@@ -22,6 +22,9 @@ test("an empty Kids page is honest, noindex and fits a phone", async ({ page }) 
   for (const id of ["kids-ages", "kids-goals", "kids-products", "kids-coming-soon"]) await expect(page.getByTestId(id)).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   await expect(page.getByTestId("kids-trust")).toContainText("নিরাপত্তা যাচাই");
+  // Coming-soon toys are listed before a sample is checked, so the promise is "before sale".
+  await expect(page.getByTestId("kids-trust")).toContainText("বিক্রি শুরুর আগে");
+  await expect(page.getByTestId("kids-trust")).not.toContainText("তবেই তোলা হয়");
   expect(await noOverflow(page)).toBe(true);
 });
 
