@@ -159,7 +159,8 @@ export default async function KidsPage({ searchParams }: KidsPageProps) {
       <section className="bg-white py-8" data-testid="kids-trust">
         <div className="container-page grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { title: "নিরাপত্তা যাচাই", text: "প্রতিটা খেলনা নমুনা হাতে নিয়ে ছোট অংশ, ধারালো কোণা আর গন্ধ যাচাই করে তবেই তোলা হয়।" },
+            // "শীঘ্রই আসছে" toys are listed before a sample is in hand, so the check is promised before sale, not before listing.
+            { title: "নিরাপত্তা যাচাই", text: "বিক্রি শুরুর আগে প্রতিটা খেলনার নমুনা হাতে নিয়ে ছোট অংশ, ধারালো কোণা আর গন্ধ যাচাই করা হয়।" },
             { title: "মিউজিক ছাড়া", text: "মিউজিকযুক্ত খেলনা আর ব্যাকগ্রাউন্ড মিউজিকওয়ালা ভিডিও রাখা হয় না।" },
             { title: "ক্যাশ অন ডেলিভারি", text: "প্যাকেট খুলে পণ্য দেখে তারপর টাকা দিন।" },
             { title: RETURN_WINDOW_LINE, text: "বদল বা টাকা ফেরতের পুরো নিয়ম রিটার্ন নীতিতে।", href: RETURN_POLICY_PATH }
