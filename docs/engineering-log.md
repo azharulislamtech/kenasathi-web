@@ -2,6 +2,26 @@
 
 Append meaningful changes here. Keep newest entries at the top.
 
+## 2026-11-14: Kids Safety Copy Fix Deployment
+
+- #59 changes the `/kids` safety card.
+  - The first 3 Kids products went live as "শীঘ্রই আসছে" before samples were in hand, and Kids & Baby and শিশুদের শিক্ষা are active.
+  - So the old claim (toys are checked by hand "তবেই তোলা হয়") was untrue.
+  - New text: "বিক্রি শুরুর আগে প্রতিটা খেলনার নমুনা হাতে নিয়ে ছোট অংশ, ধারালো কোণা আর গন্ধ যাচাই করা হয়।"
+- Verification: independently re-run in one full pass on a clean checkout of fc2199e (unit 61/61, db 58/58, e2e 57/57, build, audit). On the owner's OK in this session it merged as `e048201` after green CI.
+- Deployed `e048201` with `--skip-domain` as `dpl_J63AQvGMy2NdH5CHyahvEH77HEC1` (https://ecommerce-mvp-prototype-yzjv4gudr-azadbasis-4964s-projects.vercel.app), then promoted.
+- **verify-live-release now fails, and the failure is pre-existing.** It fails with `/products/wooden-capital-letter-board-a-z BDT price` on staging and on the previous live deploy `dpl_EV3gqVyP…` alike.
+  - Cause: the script assumes every sitemap product has a BDT price. The new coming-soon products correctly have Product JSON-LD with no offer or price (guideline §৩: no price or order before stock).
+  - Instead, the checks were run by hand on staging and live:
+    - all 10 sitemap URLs return 200, including the 3 coming-soon product pages and `/categories/kids-baby` and `/categories/kids-education`;
+    - each coming-soon page has Product JSON-LD, a canonical, the "শীঘ্রই আসছে" badge and no add-to-cart;
+    - `/checkout` and `/api/health` return 200;
+    - the legacy 301s point to the right targets;
+    - the admin pages return 307 to login;
+    - `/kids` has the new copy and not the old claim.
+  - Follow-up: update `scripts/verify-live-release.mjs` so a coming-soon product needs Product JSON-LD and a canonical but no price.
+- Rollback target: `dpl_EV3gqVyPtnXzyfDCExofHVazukuw`. No database change.
+
 ## 2026-11-08: Kids Ages 2–6 Deployment
 
 - #57 widens the Kids range from 3–6 to 2–6 years, on the owner's decision.
