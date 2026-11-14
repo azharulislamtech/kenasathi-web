@@ -33,19 +33,53 @@ const products=urls.filter(x=>x.pathname.startsWith('/products/'));
 const categories=urls.filter(x=>x.pathname.startsWith('/categories/'));
 if(requireCatalog) assert.ok(products.length&&categories.length,'Product/category sitemap URLs (--require-catalog)');
 
+// The Product JSON-LD block on a product page (src/lib/seo.ts productStructuredData).
+function productJsonLd(body,path) {
+  const blocks=[...body.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(x=>JSON.parse(x[1]));
+  const product=blocks.flatMap(x=>Array.isArray(x)?x:[x]).find(x=>x['@type']==='Product');
+  assert.ok(product,`${path} Product JSON-LD`);
+  return product;
+}
+
+// The COD buy button is only in the product's own purchase panel (not in the
+// in-stock alternatives shown under a coming-soon product).
+const BUY_BUTTON='এখনই অর্ডার করুন (COD)';
+const COMING_SOON_NOTE='শীঘ্রই আসছে — পণ্য হাতে আসার আগে কোনো অর্ডার বা টাকা নেওয়া হয় না।';
+const states={inStock:0,stockEnded:0,comingSoon:0};
+
 // Every listed product must exist and carry Product JSON-LD; a 404 here means the
-// sitemap still lists a removed or hidden product.
+// sitemap still lists a removed or hidden product. The JSON-LD follows the product's
+// state (guideline §৩, seo.ts): in stock → BDT offer, InStock, and the COD button;
+// stock ended → BDT offer, OutOfStock, no COD button; coming soon → no offer and no
+// price at all, the coming-soon note, and no COD button.
 for(const product of products){
-  const response=await fetch(new URL(product.pathname,base),{signal:AbortSignal.timeout(15000)});
-  assert.equal(response.status,200,`${product.pathname} is listed in sitemap.xml but returns ${response.status} (stale sitemap or hidden product)`);
+  const path=product.pathname;
+  const response=await fetch(new URL(path,base),{signal:AbortSignal.timeout(15000)});
+  assert.equal(response.status,200,`${path} is listed in sitemap.xml but returns ${response.status} (stale sitemap or hidden product)`);
   const body=await response.text();
-  results.push({path:product.pathname,status:response.status});
-  assert.ok(body.includes('application/ld+json')&&body.includes('"@type":"Product"'),`${product.pathname} Product JSON-LD`);
-  assert.ok(body.includes('"priceCurrency":"BDT"'),`${product.pathname} BDT price`);
-  assert.ok(body.includes(`href="https://kenasathi.com${product.pathname}"`),`${product.pathname} canonical`);
+  const ld=productJsonLd(body,path);
+  assert.ok(body.includes(`href="https://kenasathi.com${path}"`),`${path} canonical`);
+  if(ld.offers){
+    assert.equal(ld.offers.priceCurrency,'BDT',`${path} BDT price`);
+    assert.ok(Number(ld.offers.price)>0,`${path} price is a positive number`);
+    if(ld.offers.availability==='https://schema.org/InStock'){
+      assert.ok(body.includes(BUY_BUTTON),`${path} in stock but has no COD button`);
+      states.inStock++;
+    } else {
+      assert.equal(ld.offers.availability,'https://schema.org/OutOfStock',`${path} offer availability`);
+      assert.ok(!body.includes(BUY_BUTTON),`${path} out of stock but still has the COD button`);
+      states.stockEnded++;
+    }
+  } else {
+    assert.ok(!('price' in ld)&&!body.includes('"priceCurrency"'),`${path} coming soon must not carry a price`);
+    assert.ok(body.includes(COMING_SOON_NOTE),`${path} has no offer but no coming-soon note`);
+    assert.ok(!body.includes(BUY_BUTTON),`${path} coming soon but has the COD button`);
+    states.comingSoon++;
+  }
+  results.push({path,status:response.status,state:ld.offers?(ld.offers.availability.endsWith('InStock')?'in_stock':'stock_ended'):'coming_soon'});
 }
 for(const category of categories) await check(category.pathname);
 
-const catalog={mode:products.length?'products':'empty',products:products.length,categories:categories.length,
+const catalog={mode:products.length?'products':'empty',products:products.length,...states,categories:categories.length,
   ...(products.length?{}:{skipped:'product detail, JSON-LD and canonical checks (no product URLs in sitemap)'})};
 console.log(JSON.stringify({base:base.origin,passed:results.length,catalog,checks:results},null,2));
