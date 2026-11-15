@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { CONSENT_TEXTS, CURRENT_CONSENT_TEXT, CURRENT_CONSENT_VERSION, WHATSAPP_MESSAGES } from "../../src/lib/whatsapp";
-import { WHATSAPP_DISPLAY, WHATSAPP_URL } from "../../src/lib/order-copy";
+import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "../../src/lib/order-copy";
 
 // R9.1: the consent text a person agrees to is versioned and matches what the database accepts.
 test("the current consent version exists and fits the database rule", () => {
@@ -34,6 +34,9 @@ test("the WhatsApp number is the same in the link, the thank-you and the privacy
   const bnDigits = "০১২৩৪৫৬৭৮৯";
   const latin = WHATSAPP_DISPLAY.replace(/[০-৯]/g, (d) => String(bnDigits.indexOf(d))).replace(/-/g, "");
   assert.equal(WHATSAPP_URL, `https://wa.me/880${latin.slice(1)}`);
+  // The hotline is the same WhatsApp Business number (owner, 2026-11-15).
+  assert.equal(SUPPORT_PHONE_TEL, `tel:+880${latin.slice(1)}`);
+  assert.equal(SUPPORT_PHONE_DISPLAY, WHATSAPP_DISPLAY);
   // Broadcasts reach only saved contacts, so the thank-you names the number to save.
   assert.ok(WHATSAPP_MESSAGES.thanks.includes(WHATSAPP_DISPLAY), "thanks: number");
   assert.match(WHATSAPP_MESSAGES.thanks, /সেভ করে নিন/);

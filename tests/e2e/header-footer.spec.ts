@@ -14,7 +14,8 @@ test("header strip, search and footer are Bangla on every page and fit a 390px p
     await expect(strip).toContainText("ক্যাশ অন ডেলিভারি");
     await expect(strip).toContainText("পণ্য দেখে টাকা দিন");
     await expect(strip.getByRole("link", { name: RETURN_LINE })).toHaveAttribute("href", "/return-policy");
-    await expect(strip.getByRole("link", { name: "০১৭১৭-১২১৮৩৯" })).toHaveAttribute("href", "tel:+8801717121839");
+    await expect(strip.getByRole("link", { name: "০১৬১৩-৬২৫৬৮৬" })).toHaveAttribute("href", "tel:+8801613625686");
+    await expect(page.locator("body")).not.toContainText("০১৭১৭-১২১৮৩৯");
     await expect(page.locator("body")).not.toContainText("৭ দিনে রিটার্ন");
   }
 

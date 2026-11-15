@@ -88,7 +88,7 @@ export default function TermsPage() {
             <p className="mt-2">
               Email: support@kenasathi.com
               <br />
-              Phone: 01717121839
+              Phone and WhatsApp: 01613625686
             </p>
           </div>
         </div>
