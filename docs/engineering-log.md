@@ -2,6 +2,19 @@
 
 Append meaningful changes here. Keep newest entries at the top.
 
+## 2026-11-15: WhatsApp Number, Hotline Change and Facebook Link Deployment
+
+- #62 is on the owner's request, after they opened WhatsApp Business on 01613-625686.
+  - 000f4f0: the WhatsApp number and a `wa.me/8801613625686` link in the footer, privacy policy and return policy. The subscribe thank-you asks people to save the number as "Kena Sathi"; consent text `wa-2026-11-v1` is unchanged.
+  - 000f4f0: the footer Facebook link moves from the dead `facebook.com/kenasathibd` to `facebook.com/kenasathi`. The new page was opened in a browser and works; the old one shows "This content isn't available".
+  - cb04f84: the hotline is now the same number. `SUPPORT_PHONE_DISPLAY`/`SUPPORT_PHONE_TEL` are ০১৬১৩-৬২৫৬৮৬ / `tel:+8801613625686` (were 01717-121839), and `WHATSAPP_DISPLAY` is derived from them. The terms page says "Phone and WhatsApp: 01613625686".
+- Verification: independently re-run in one full pass on a clean checkout of cb04f84 (unit 65/65, db 58/58, e2e 57/57, build, audit). On the owner's OK in this session it merged as `536ed3b` after green CI.
+- Deployed `536ed3b` with `--skip-domain` as `dpl_5jd4HZ71nFEhxxdX5yiwvyPSTWdH` (https://ecommerce-mvp-prototype-o8vgv2x5i-azadbasis-4964s-projects.vercel.app), then promoted.
+  - verify-live-release passed 16 checks on the staged URL and again on https://kenasathi.com, with `comingSoon: 3` (the state-aware verifier from #61).
+  - On staging and live, `/`, `/products`, `/kids`, `/privacy-policy`, `/return-policy`, `/terms`, `/checkout`, `/track-order` and `/cart` all show the new number with the `tel:+8801613625686` and `wa.me/8801613625686` links and `facebook.com/kenasathi`. None of them shows "০১৭১৭", "01717" or "kenasathibd".
+  - The legacy 301 and the admin 307 redirects are unchanged.
+- Rollback target: `dpl_J63AQvGMy2NdH5CHyahvEH77HEC1`. No database change.
+
 ## 2026-11-14: Kids Safety Copy Fix Deployment
 
 - #59 changes the `/kids` safety card.
