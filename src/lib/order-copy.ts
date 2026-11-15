@@ -1,8 +1,14 @@
 // Bangla customer-facing copy for cart, checkout, order success and tracking (R2.9).
 // Keep wording honest: no promise the system cannot keep.
 
-export const SUPPORT_PHONE_DISPLAY = "০১৭১৭-১২১৮৩৯";
-export const SUPPORT_PHONE_TEL = "tel:+8801717121839";
+// The hotline and the WhatsApp Business account are one number (owner, 2026-11-15; was 01717-121839).
+export const SUPPORT_PHONE_DISPLAY = "০১৬১৩-৬২৫৬৮৬";
+export const SUPPORT_PHONE_TEL = "tel:+8801613625686";
+
+// WhatsApp updates are sent from this number, and "বন্ধ" or a re-subscribe message goes to it.
+export const WHATSAPP_DISPLAY = SUPPORT_PHONE_DISPLAY;
+export const WHATSAPP_URL = "https://wa.me/8801613625686";
+export const FACEBOOK_PAGE_URL = "https://www.facebook.com/kenasathi";
 
 // R2.5: the one return line used everywhere (header, trust cards, product page, policy).
 // Never write "৭ দিনে রিটার্ন".

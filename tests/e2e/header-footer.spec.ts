@@ -14,7 +14,8 @@ test("header strip, search and footer are Bangla on every page and fit a 390px p
     await expect(strip).toContainText("ক্যাশ অন ডেলিভারি");
     await expect(strip).toContainText("পণ্য দেখে টাকা দিন");
     await expect(strip.getByRole("link", { name: RETURN_LINE })).toHaveAttribute("href", "/return-policy");
-    await expect(strip.getByRole("link", { name: "০১৭১৭-১২১৮৩৯" })).toHaveAttribute("href", "tel:+8801717121839");
+    await expect(strip.getByRole("link", { name: "০১৬১৩-৬২৫৬৮৬" })).toHaveAttribute("href", "tel:+8801613625686");
+    await expect(page.locator("body")).not.toContainText("০১৭১৭-১২১৮৩৯");
     await expect(page.locator("body")).not.toContainText("৭ দিনে রিটার্ন");
   }
 
@@ -25,6 +26,10 @@ test("header strip, search and footer are Bangla on every page and fit a 390px p
   await expect(footer.getByRole("link", { name: "রিটার্ন ও টাকা ফেরতের নীতি" })).toHaveAttribute("href", "/return-policy");
   await expect(footer.getByRole("link", { name: "গোপনীয়তা নীতি" })).toHaveAttribute("href", "/privacy-policy");
   await expect(footer).not.toContainText("Important Links");
+  // The shop's WhatsApp Business number and the real Facebook page (the old /kenasathibd link was dead).
+  await expect(footer.getByTestId("footer-whatsapp")).toHaveText("০১৬১৩-৬২৫৬৮৬");
+  await expect(footer.getByTestId("footer-whatsapp")).toHaveAttribute("href", "https://wa.me/8801613625686");
+  await expect(footer.getByTestId("footer-facebook")).toHaveAttribute("href", "https://www.facebook.com/kenasathi");
 
   await page.setViewportSize({ width: 1280, height: 800 });
   await expect(page.getByPlaceholder("পণ্য বা সমস্যা লিখে খুঁজুন…").first()).toBeVisible();
