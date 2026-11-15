@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { BrandLogo } from "@/components/ui/brand-logo";
-import { RETURN_POLICY_PATH, RETURN_WINDOW_LINE, SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/order-copy";
+import {
+  FACEBOOK_PAGE_URL,
+  RETURN_POLICY_PATH,
+  RETURN_WINDOW_LINE,
+  SUPPORT_PHONE_DISPLAY,
+  SUPPORT_PHONE_TEL,
+  WHATSAPP_DISPLAY,
+  WHATSAPP_URL
+} from "@/lib/order-copy";
 
 type MenuLink = { href: string; label: string };
 
@@ -47,10 +55,16 @@ export function SiteFooter({ shopLinks }: { shopLinks: MenuLink[] }) {
               ফোন: <a className={linkClass} href={SUPPORT_PHONE_TEL}>{SUPPORT_PHONE_DISPLAY}</a>
             </li>
             <li>
+              WhatsApp:{" "}
+              <a className={linkClass} data-testid="footer-whatsapp" href={WHATSAPP_URL} rel="noopener noreferrer" target="_blank">
+                {WHATSAPP_DISPLAY}
+              </a>
+            </li>
+            <li>
               ইমেইল: <a className={linkClass} href="mailto:support@kenasathi.com">support@kenasathi.com</a>
             </li>
             <li>
-              <a className={linkClass} href="https://www.facebook.com/kenasathibd" rel="noopener noreferrer" target="_blank">
+              <a className={linkClass} data-testid="footer-facebook" href={FACEBOOK_PAGE_URL} rel="noopener noreferrer" target="_blank">
                 Facebook পেজ
               </a>
             </li>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { RETURN_WINDOW_LINE, SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/order-copy";
+import { RETURN_WINDOW_LINE, SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/order-copy";
 
 export const metadata = {
   title: "রিটার্ন ও টাকা ফেরতের নীতি",
@@ -78,6 +78,9 @@ export default function ReturnPolicyPage() {
             <p className="mt-2">
               ফোন:{" "}
               <a className="font-semibold text-slate-700 hover:text-blue-700" href={SUPPORT_PHONE_TEL}>{SUPPORT_PHONE_DISPLAY}</a>
+              <br />
+              WhatsApp (ভাঙা বা ভুল পণ্যের ছবি পাঠাতে):{" "}
+              <a className="font-semibold text-slate-700 hover:text-blue-700" href={WHATSAPP_URL} rel="noopener noreferrer" target="_blank">{WHATSAPP_DISPLAY}</a>
               <br />
               ইমেইল: support@kenasathi.com
             </p>

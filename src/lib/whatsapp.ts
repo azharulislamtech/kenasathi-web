@@ -1,3 +1,5 @@
+import { WHATSAPP_DISPLAY } from "./order-copy";
+
 // R9.1: WhatsApp updates. The consent text a person agreed to is stored by version
 // (whatsapp_subscribers.consent_version). Never edit a published text: add a new version
 // and point CURRENT_CONSENT_VERSION at it, so every stored consent keeps its exact wording.
@@ -12,7 +14,8 @@ export const CURRENT_CONSENT_TEXT = CONSENT_TEXTS[CURRENT_CONSENT_VERSION];
 export const WHATSAPP_MESSAGES = {
   // The same thank-you for every number, so the form never reveals who is on the list.
   // An opted-out number is never switched back on by the form; the second line says how.
-  thanks: "ধন্যবাদ! নতুন খবর এলে WhatsApp-এ জানাব। আগে কখনো বন্ধ করে থাকলে, আবার চালু করতে আমাদের WhatsApp-এ একটা মেসেজ দিন।",
+  // Broadcast messages reach only people who saved the number, so the thank-you asks for that.
+  thanks: `ধন্যবাদ! নতুন খবর এলে WhatsApp-এ জানাব। খবর পেতে আমাদের নম্বর ${WHATSAPP_DISPLAY} "Kena Sathi" নামে ফোনে সেভ করে নিন। আগে কখনো বন্ধ করে থাকলে, আবার চালু করতে এই নম্বরে WhatsApp-এ একটা মেসেজ দিন।`,
   phone: "সঠিক মোবাইল নম্বর লিখুন, যেমন 01712345678।",
   consent: "খবর পেতে সম্মতির ঘরে টিক দিন।",
   tooMany: "অল্প সময়ে অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।",

@@ -1,4 +1,4 @@
-import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/order-copy";
+import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/order-copy";
 
 export const metadata = {
   title: "গোপনীয়তা নীতি",
@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
               না। কখন আর কোন লেখায় সম্মতি দিয়েছেন, তার রেকর্ড রাখা হয়।
             </p>
             <ul className="mt-2 list-disc space-y-2 pl-5">
-              <li>বন্ধ করতে যেকোনো সময় WhatsApp-এ &ldquo;বন্ধ&rdquo; লিখুন বা ফোন করুন। বন্ধ করলে আর মেসেজ যাবে না, আর আপনি নিজে আবার সম্মতি না দিলে নম্বরটা আর যোগ হবে না — সেজন্য শুধু &ldquo;বন্ধ করা হয়েছে&rdquo; রেকর্ডটা রাখা হয়।</li>
+              <li>খবর আসে আমাদের WhatsApp নম্বর {WHATSAPP_DISPLAY} থেকে। বন্ধ করতে যেকোনো সময় এই নম্বরে &ldquo;বন্ধ&rdquo; লিখুন বা ফোন করুন। বন্ধ করলে আর মেসেজ যাবে না, আর আপনি নিজে আবার সম্মতি না দিলে নম্বরটা আর যোগ হবে না — সেজন্য শুধু &ldquo;বন্ধ করা হয়েছে&rdquo; রেকর্ডটা রাখা হয়।</li>
               <li><strong>১২ মাস</strong> কোনো সাড়া না থাকলে নম্বরটা তালিকা থেকে মুছে ফেলা হয়।</li>
             </ul>
           </div>
@@ -103,6 +103,9 @@ export default function PrivacyPolicyPage() {
             <p className="mt-2">
               ফোন:{" "}
               <a className="font-semibold text-slate-700 hover:text-blue-700" href={SUPPORT_PHONE_TEL}>{SUPPORT_PHONE_DISPLAY}</a>
+              <br />
+              WhatsApp:{" "}
+              <a className="font-semibold text-slate-700 hover:text-blue-700" href={WHATSAPP_URL} rel="noopener noreferrer" target="_blank">{WHATSAPP_DISPLAY}</a>
               <br />
               ইমেইল: support@kenasathi.com
             </p>

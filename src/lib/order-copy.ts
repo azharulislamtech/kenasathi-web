@@ -4,6 +4,12 @@
 export const SUPPORT_PHONE_DISPLAY = "০১৭১৭-১২১৮৩৯";
 export const SUPPORT_PHONE_TEL = "tel:+8801717121839";
 
+// The shop's WhatsApp Business number (owner, 2026-11-15). WhatsApp updates are sent from it,
+// and "বন্ধ" or a re-subscribe message goes to it. Calls stay on SUPPORT_PHONE.
+export const WHATSAPP_DISPLAY = "০১৬১৩-৬২৫৬৮৬";
+export const WHATSAPP_URL = "https://wa.me/8801613625686";
+export const FACEBOOK_PAGE_URL = "https://www.facebook.com/kenasathi";
+
 // R2.5: the one return line used everywhere (header, trust cards, product page, policy).
 // Never write "৭ দিনে রিটার্ন".
 export const RETURN_WINDOW_LINE = "ভাঙা/ভুল/অসম্পূর্ণ পণ্য? ডেলিভারির ৭২ ঘণ্টার মধ্যে জানান";

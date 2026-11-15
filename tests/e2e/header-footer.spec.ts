@@ -25,6 +25,10 @@ test("header strip, search and footer are Bangla on every page and fit a 390px p
   await expect(footer.getByRole("link", { name: "রিটার্ন ও টাকা ফেরতের নীতি" })).toHaveAttribute("href", "/return-policy");
   await expect(footer.getByRole("link", { name: "গোপনীয়তা নীতি" })).toHaveAttribute("href", "/privacy-policy");
   await expect(footer).not.toContainText("Important Links");
+  // The shop's WhatsApp Business number and the real Facebook page (the old /kenasathibd link was dead).
+  await expect(footer.getByTestId("footer-whatsapp")).toHaveText("০১৬১৩-৬২৫৬৮৬");
+  await expect(footer.getByTestId("footer-whatsapp")).toHaveAttribute("href", "https://wa.me/8801613625686");
+  await expect(footer.getByTestId("footer-facebook")).toHaveAttribute("href", "https://www.facebook.com/kenasathi");
 
   await page.setViewportSize({ width: 1280, height: 800 });
   await expect(page.getByPlaceholder("পণ্য বা সমস্যা লিখে খুঁজুন…").first()).toBeVisible();

@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { CONSENT_TEXTS, CURRENT_CONSENT_TEXT, CURRENT_CONSENT_VERSION, WHATSAPP_MESSAGES } from "../../src/lib/whatsapp";
+import { WHATSAPP_DISPLAY, WHATSAPP_URL } from "../../src/lib/order-copy";
 
 // R9.1: the consent text a person agrees to is versioned and matches what the database accepts.
 test("the current consent version exists and fits the database rule", () => {
@@ -27,4 +28,15 @@ test("the consent text and the privacy policy promise the same thing", () => {
 
 test("the thank-you does not claim a re-subscription the form cannot do", () => {
   assert.match(WHATSAPP_MESSAGES.thanks, /আগে কখনো বন্ধ করে থাকলে/);
+});
+
+test("the WhatsApp number is the same in the link, the thank-you and the privacy policy", () => {
+  const bnDigits = "০১২৩৪৫৬৭৮৯";
+  const latin = WHATSAPP_DISPLAY.replace(/[০-৯]/g, (d) => String(bnDigits.indexOf(d))).replace(/-/g, "");
+  assert.equal(WHATSAPP_URL, `https://wa.me/880${latin.slice(1)}`);
+  // Broadcasts reach only saved contacts, so the thank-you names the number to save.
+  assert.ok(WHATSAPP_MESSAGES.thanks.includes(WHATSAPP_DISPLAY), "thanks: number");
+  assert.match(WHATSAPP_MESSAGES.thanks, /সেভ করে নিন/);
+  const policy = readFileSync("src/app/(store)/privacy-policy/page.tsx", "utf8");
+  assert.ok(policy.includes("WHATSAPP_DISPLAY") && policy.includes("WHATSAPP_URL"), "policy: number and link");
 });
