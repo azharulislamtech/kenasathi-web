@@ -2,6 +2,20 @@
 
 Append meaningful changes here. Keep newest entries at the top.
 
+## 2026-11-20: Next.js 16.4.6 Security Update Deployment
+
+- On 2026-11-17 a new high `picomatch` advisory turned `npm audit --audit-level=high` red on main and every PR. By 2026-11-20 it no longer reported, and PR #64's CI went green on re-run.
+- `npm audit` also listed seven moderate Next.js advisories for ≤16.4.4: HttpOnly cookie exposure, cross-user cache disclosure and poisoning, response injection, an image SVG bypass, and root-param cache leaks.
+- #65 moves `next` and `eslint-config-next` from 16.4.3 to 16.4.6 (latest stable, published 2026-11-09). `npm audit fix` without `--force` also moves the dev-only `minimatch` to 11.0.9, which adds its new dependency `@isaacs/nonrecursive-glob-match` 1.1.0 from the minimatch maintainer. `npm audit` now finds 0 vulnerabilities, and no app code changed.
+- Verification: independently re-run in one full pass on a clean checkout of ddc2d8c (unit 65/65, db 58/58, e2e 57/57, build on Next.js 16.4.6, audit 0). The owner OK'd it in this session, and it merged as `0eaca85` after green CI.
+- Deployed `0eaca85` with `--skip-domain` as `dpl_BncKTdyC5Z8cxS2mtRLkfKXSkXJx` (https://ecommerce-mvp-prototype-j3h9jx2hk-azadbasis-4964s-projects.vercel.app), then promoted. Checked on staging and live:
+  - verify-live-release passed 17 checks, with 4 coming-soon products.
+  - The 9 pages show the new hotline, tel, wa.me and Facebook links.
+  - The legacy 301 and the admin 307 redirects are unchanged, and `/api/cron/retention` returns 401.
+  - A product image through `/_next/image` returns 200 `image/png`, 276,756 bytes, identical to before.
+  - No `x-powered-by` header.
+- Rollback target: `dpl_5jd4HZ71nFEhxxdX5yiwvyPSTWdH`. No database change.
+
 ## 2026-11-15: WhatsApp Number, Hotline Change and Facebook Link Deployment
 
 - #62 is on the owner's request, after they opened WhatsApp Business on 01613-625686.
